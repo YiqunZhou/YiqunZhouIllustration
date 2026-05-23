@@ -6,7 +6,13 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Instagram, Mail, Menu } from "lucide-react";
-import { IMAGES, SECTIONS, IMAGE_DESCRIPTIONS, type SectionConfig, type RowConfig } from "./constants.ts";
+import {
+  IMAGES,
+  SECTIONS,
+  IMAGE_DESCRIPTIONS,
+  type SectionConfig,
+  type RowConfig,
+} from "./constants.ts";
 
 const scrollToSection = (id: string) => {
   const element = document.getElementById(id);
@@ -24,35 +30,41 @@ const RepeatingTitle: React.FC<{ title: string }> = ({ title }) => {
   );
 };
 
-const ImageCard: React.FC<{ imgKey: keyof typeof IMAGES; onClick: () => void }> = ({ imgKey, onClick }) => (
-  <div 
-    onClick={onClick} 
+const ImageCard: React.FC<{
+  imgKey: keyof typeof IMAGES;
+  onClick: () => void;
+}> = ({ imgKey, onClick }) => (
+  <div
+    onClick={onClick}
     className="relative group w-full h-auto mb-1 md:mb-2 overflow-hidden cursor-pointer"
   >
-    <img 
-      src={IMAGES[imgKey]} 
+    <img
+      src={IMAGES[imgKey]}
       alt={String(imgKey)}
       referrerPolicy="no-referrer"
       className="w-full h-auto block transition-transform duration-700 group-hover:scale-105"
     />
     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-accent/40 backdrop-blur-[2px] pointer-events-none">
-       <span className="text-[10px] uppercase tracking-[0.2em] text-primary-bg font-mono px-4 py-2 bg-accent/90 rounded-md">
-         {String(imgKey).split('.')[0]}
-       </span>
+      <span className="text-[10px] uppercase tracking-[0.2em] text-primary-bg font-mono px-4 py-2 bg-accent/90 rounded-md">
+        {String(imgKey).split(".")[0]}
+      </span>
     </div>
   </div>
 );
 
-const Section: React.FC<{ 
-  section: SectionConfig; 
-  isFirst: boolean; 
+const Section: React.FC<{
+  section: SectionConfig;
+  isFirst: boolean;
   onSelectImage: (img: keyof typeof IMAGES) => void;
 }> = ({ section, isFirst, onSelectImage }) => {
-  const allImages = section.rows.flatMap(row => row.images);
-  
+  const allImages = section.rows.flatMap((row) => row.images);
+
   // Create N empty arrays for columns
-  const columns: (keyof typeof IMAGES)[][] = Array.from({ length: section.columns }, () => []);
-  
+  const columns: (keyof typeof IMAGES)[][] = Array.from(
+    { length: section.columns },
+    () => [],
+  );
+
   // Distribute images across columns
   allImages.forEach((img, i) => {
     columns[i % section.columns].push(img);
@@ -61,11 +73,17 @@ const Section: React.FC<{
   return (
     <section id={section.id} className="pt-4">
       <RepeatingTitle title={section.title} />
-      <div className={`grid ${section.columns === 3 ? 'grid-cols-3' : 'grid-cols-2'} gap-1 px-1 md:gap-2 md:px-2 py-4 items-center`}>
+      <div
+        className={`grid ${section.columns === 3 ? "grid-cols-3" : "grid-cols-2"} gap-1 px-1 md:gap-2 md:px-2 py-4 items-center`}
+      >
         {columns.map((colImages, colIdx) => (
           <div key={colIdx} className="flex flex-col">
             {colImages.map((img, imgIdx) => (
-              <ImageCard key={`${img}-${imgIdx}`} imgKey={img} onClick={() => onSelectImage(img)} />
+              <ImageCard
+                key={`${img}-${imgIdx}`}
+                imgKey={img}
+                onClick={() => onSelectImage(img)}
+              />
             ))}
           </div>
         ))}
@@ -79,15 +97,21 @@ interface PreloaderProps {
 }
 
 const Preloader: React.FC<PreloaderProps> = ({ progress }) => {
-  const [imgUrl, setImgUrl] = useState("https://res.cloudinary.com/dufnjfidt/image/upload/v1779253452/mac_sync_folder/peace1.png");
+  const [imgUrl, setImgUrl] = useState(
+    "https://res.cloudinary.com/dufnjfidt/image/upload/v1779253452/mac_sync_folder/peace1.png",
+  );
   const [fallbackIndex, setFallbackIndex] = useState(0);
 
   const handleImageError = () => {
     if (fallbackIndex === 0) {
-      setImgUrl("https://res.cloudinary.com/dufnjfidt/image/upload/v1779501259/mac_sync_folder/peace1.png");
+      setImgUrl(
+        "https://res.cloudinary.com/dufnjfidt/image/upload/v1779501259/mac_sync_folder/peace1.png",
+      );
       setFallbackIndex(1);
     } else if (fallbackIndex === 1) {
-      setImgUrl("https://res.cloudinary.com/dufnjfidt/image/upload/v1779501259/mac_sync_folder/peace.png");
+      setImgUrl(
+        "https://res.cloudinary.com/dufnjfidt/image/upload/v1779501259/mac_sync_folder/peace.png",
+      );
       setFallbackIndex(2);
     }
   };
@@ -100,18 +124,19 @@ const Preloader: React.FC<PreloaderProps> = ({ progress }) => {
       transition={{ duration: 0.8, ease: "easeInOut" }}
       className="fixed inset-0 z-[10000] bg-[#48524a] flex flex-col items-center justify-center font-sans select-none"
       style={{
-        backgroundImage: 'url("https://res.cloudinary.com/dufnjfidt/image/upload/v1779253452/mac_sync_folder/pattern1.png")',
-        backgroundRepeat: 'repeat',
-        backgroundPosition: '0 0',
-        backgroundSize: 'auto',
+        backgroundImage:
+          'url("https://res.cloudinary.com/dufnjfidt/image/upload/v1779253452/mac_sync_folder/pattern1.png")',
+        backgroundRepeat: "repeat",
+        backgroundPosition: "0 0",
+        backgroundSize: "auto",
       }}
     >
       <div className="flex flex-col items-center max-w-sm px-8 text-center gap-6">
         {/* Peace Icon */}
         <div className="w-28 h-28 flex items-center justify-center overflow-hidden mb-1">
-          <img 
-            src={imgUrl} 
-            alt="YZ Circle Icon" 
+          <img
+            src={imgUrl}
+            alt="YZ Circle Icon"
             onError={handleImageError}
             referrerPolicy="no-referrer"
             className="w-full h-full object-contain"
@@ -120,7 +145,7 @@ const Preloader: React.FC<PreloaderProps> = ({ progress }) => {
 
         {/* Artist Moniker */}
         <div className="space-y-1">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5 }}
@@ -128,7 +153,7 @@ const Preloader: React.FC<PreloaderProps> = ({ progress }) => {
           >
             Yiqun Zhou
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.45 }}
             transition={{ delay: 0.3 }}
@@ -144,13 +169,15 @@ const Preloader: React.FC<PreloaderProps> = ({ progress }) => {
             <span className="text-5xl md:text-6xl font-normal text-accent tabular-nums tracking-tighter">
               {progress}
             </span>
-            <span className="text-xl md:text-2xl text-accent font-light opacity-80 italic ml-1">%</span>
+            <span className="text-xl md:text-2xl text-accent font-light opacity-80 italic ml-1">
+              %
+            </span>
           </motion.div>
         </div>
 
         {/* Sleek Progress Track */}
         <div className="w-48 h-[2px] bg-accent/20 rounded-full overflow-hidden relative">
-          <motion.div 
+          <motion.div
             className="h-full bg-accent"
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.1 }}
@@ -170,19 +197,21 @@ interface SidebarContentProps {
   isMobileDrawer?: boolean;
 }
 
-const SidebarContent: React.FC<SidebarContentProps> = ({ 
-  onClose, 
-  copyEmail, 
-  showEmailToast, 
-  toastPos, 
+const SidebarContent: React.FC<SidebarContentProps> = ({
+  onClose,
+  copyEmail,
+  showEmailToast,
+  toastPos,
   email,
-  isMobileDrawer = false 
+  isMobileDrawer = false,
 }) => {
   return (
     <div className="h-full flex flex-col justify-between">
       <div>
         <div className="flex justify-between items-center mb-10">
-          <h1 className={`${isMobileDrawer ? 'text-3xl' : 'text-[2.6vw]'} font-serif font-semibold tracking-[0.05em] leading-none text-left break-words text-accent`}>
+          <h1
+            className={`${isMobileDrawer ? "text-3xl" : "text-[2.6vw]"} font-serif font-semibold tracking-[0.05em] leading-none text-left break-words text-accent`}
+          >
             YIQUN ZHOU
           </h1>
           {onClose && (
@@ -200,10 +229,14 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
           <p>Comic Artist,</p>
           <p>Graphic Designer</p>
           <p>based in Toronto</p>
+          <p>RISD Illustration</p>
+          <p>OCAD Digital Future</p>
         </div>
 
         <div className="text-xs opacity-50 mb-12">
-          <p className="mb-1 uppercase tracking-widest border-b border-white/10 pb-1">Selected Clients:</p>
+          <p className="mb-1 uppercase tracking-widest border-b border-white/10 pb-1">
+            Selected Clients:
+          </p>
           <ul className="space-y-0.5">
             <li>Vice China,</li>
             <li>Another Man Magazine,</li>
@@ -221,7 +254,9 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
               }}
               className="text-left hover:translate-x-1 transition-transform group flex items-center cursor-pointer"
             >
-              <span className="opacity-40 group-hover:opacity-100 transition-opacity mr-1 font-mono">-</span>
+              <span className="opacity-40 group-hover:opacity-100 transition-opacity mr-1 font-mono">
+                -
+              </span>
               <span className="capitalize opacity-60 group-hover:opacity-100 transition-opacity">
                 {s.title}
               </span>
@@ -232,38 +267,43 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
 
       <div className="text-[10px] space-y-4 pt-8">
         <div className="w-[115%] -ml-[7.5%] opacity-80 hover:opacity-100 transition-all duration-300">
-          <img 
-            src="https://res.cloudinary.com/dufnjfidt/image/upload/v1779501259/mac_sync_folder/peace.png" 
-            alt="Yiqun Zhou Profile" 
+          <img
+            src="https://res.cloudinary.com/dufnjfidt/image/upload/v1779501259/mac_sync_folder/peace.png"
+            alt="Yiqun Zhou Profile"
             className="w-full h-auto block"
             referrerPolicy="no-referrer"
           />
         </div>
         <div className="flex items-center gap-3 relative">
-          <a 
-            href="https://www.instagram.com/bigbrigandhewada/" 
-            target="_blank" 
+          <a
+            href="https://www.instagram.com/bigbrigandhewada/"
+            target="_blank"
             rel="noopener noreferrer"
             className="opacity-50 hover:opacity-100 transition-opacity"
           >
             <Instagram size={14} />
           </a>
-          <button 
+          <button
             onClick={copyEmail}
             className="opacity-50 hover:opacity-100 transition-opacity cursor-pointer relative"
           >
             <Mail size={14} />
-            
+
             <AnimatePresence>
               {showEmailToast && (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, x: 0, y: 20, scale: 0.8 }}
-                  animate={{ opacity: 1, x: 0, y: isMobileDrawer ? -50 : -90, scale: 1 }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    y: isMobileDrawer ? -50 : -90,
+                    scale: 1,
+                  }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  style={{ 
-                    left: isMobileDrawer ? '1rem' : '1rem', 
-                    top: isMobileDrawer ? 'auto' : toastPos.y, 
-                    bottom: isMobileDrawer ? '2rem' : 'auto' 
+                  style={{
+                    left: isMobileDrawer ? "1rem" : "1rem",
+                    top: isMobileDrawer ? "auto" : toastPos.y,
+                    bottom: isMobileDrawer ? "2rem" : "auto",
                   }}
                   className="fixed bg-accent text-primary-bg px-6 py-4 rounded-xl shadow-2xl z-[9999] pointer-events-none text-center flex flex-col items-center justify-center gap-1 min-w-[240px]"
                 >
@@ -274,8 +314,8 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                     copied to clipboard
                   </div>
                   {!isMobileDrawer && (
-                    <div 
-                      className="absolute bottom-[-6px] bg-accent rotate-45 w-3 h-3" 
+                    <div
+                      className="absolute bottom-[-6px] bg-accent rotate-45 w-3 h-3"
                       style={{ left: `calc(${toastPos.x}px - 1rem - 6px)` }}
                     />
                   )}
@@ -284,9 +324,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             </AnimatePresence>
           </button>
         </div>
-        <div className="opacity-30">
-          © 2026 Yiqun Zhou
-        </div>
+        <div className="opacity-30">© 2026 Yiqun Zhou</div>
       </div>
     </div>
   );
@@ -301,7 +339,9 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showEmailToast, setShowEmailToast] = useState(false);
   const [toastPos, setToastPos] = useState({ x: 0, y: 0 });
-  const [selectedImage, setSelectedImage] = useState<keyof typeof IMAGES | null>(null);
+  const [selectedImage, setSelectedImage] = useState<
+    keyof typeof IMAGES | null
+  >(null);
   const imgRef = React.useRef<HTMLImageElement>(null);
   const [imgWidth, setImgWidth] = useState<number | null>(null);
   const email = "zhouyiqunbbh@gmail.com";
@@ -313,7 +353,7 @@ export default function App() {
       "https://res.cloudinary.com/dufnjfidt/image/upload/v1779253452/mac_sync_folder/peace1.png",
       "https://res.cloudinary.com/dufnjfidt/image/upload/v1779501259/mac_sync_folder/peace1.png",
       "https://res.cloudinary.com/dufnjfidt/image/upload/v1779253452/mac_sync_folder/pattern1.png",
-      ...Object.values(IMAGES)
+      ...Object.values(IMAGES),
     ];
 
     let loadedCount = 0;
@@ -329,12 +369,12 @@ export default function App() {
       img.referrerPolicy = "no-referrer";
       img.src = url;
       preloadedImageCache.push(img);
-      
+
       const handleLoad = () => {
         loadedCount++;
         const percent = Math.min(Math.round((loadedCount / total) * 100), 100);
         setLoadedPercent(percent);
-        
+
         if (loadedCount >= total) {
           clearTimeout(safetyTimer);
           // Brief smooth delay to savor full 100% load
@@ -384,7 +424,7 @@ export default function App() {
       </AnimatePresence>
       {/* Desktop Sidebar - Fixed width 1/7 of viewport, hidden on mobile */}
       <aside className="hidden md:flex w-[14.28vw] shrink-0 h-full p-6 flex-col justify-between z-50 overflow-y-auto bg-[#48524a]/20 border-r border-accent/5">
-        <SidebarContent 
+        <SidebarContent
           copyEmail={copyEmail}
           showEmailToast={showEmailToast}
           toastPos={toastPos}
@@ -394,7 +434,7 @@ export default function App() {
 
       {/* Mobile Menu Button - Floating top left, hidden on desktop */}
       <div className="md:hidden fixed top-4 left-4 z-[90]">
-        <button 
+        <button
           onClick={() => setIsMobileMenuOpen(true)}
           className="w-10 h-10 rounded-full border border-accent/20 bg-primary-bg/90 backdrop-blur-md text-accent hover:bg-accent hover:text-primary-bg transition-all duration-300 flex items-center justify-center shadow-lg cursor-pointer select-none"
           title="Open Menu"
@@ -423,7 +463,7 @@ export default function App() {
               transition={{ type: "spring", damping: 25, stiffness: 220 }}
               className="fixed top-0 left-0 bottom-0 w-[80vw] sm:w-[50vw] bg-primary-bg border-r border-accent/10 z-[100] p-6 flex flex-col justify-between overflow-y-auto md:hidden"
             >
-              <SidebarContent 
+              <SidebarContent
                 onClose={() => setIsMobileMenuOpen(false)}
                 copyEmail={copyEmail}
                 showEmailToast={showEmailToast}
@@ -438,16 +478,21 @@ export default function App() {
 
       {/* Main Content Area - Scrollable */}
       <main className="flex-1 h-full overflow-y-auto">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           className="w-full flex flex-col"
         >
           {SECTIONS.map((section, idx) => (
-            <Section key={section.id} section={section} isFirst={idx === 0} onSelectImage={setSelectedImage} />
+            <Section
+              key={section.id}
+              section={section}
+              isFirst={idx === 0}
+              onSelectImage={setSelectedImage}
+            />
           ))}
-          
+
           {/* Footer spacer */}
           <div className="h-[20vh]" />
         </motion.div>
@@ -493,16 +538,20 @@ export default function App() {
               </div>
 
               {/* Text Description Box - Sharp corners, solid deep olive color background, width matches the dynamic image width */}
-              <div 
+              <div
                 className="bg-[#384039] px-6 py-5 border-t border-accent/10 transition-all duration-300 shadow-2xl"
-                style={{ width: imgWidth ? `${imgWidth}px` : "100%", maxWidth: "100%" }}
+                style={{
+                  width: imgWidth ? `${imgWidth}px` : "100%",
+                  maxWidth: "100%",
+                }}
               >
                 <div className="w-full mx-auto">
                   {(() => {
                     const desc = IMAGE_DESCRIPTIONS[selectedImage];
                     if (!desc) return null;
                     const colIdx = desc.indexOf(" : ");
-                    const descText = colIdx !== -1 ? desc.substring(colIdx + 3) : desc;
+                    const descText =
+                      colIdx !== -1 ? desc.substring(colIdx + 3) : desc;
                     return (
                       <p className="font-serif text-sm md:text-base text-accent/95 leading-relaxed italic">
                         {descText}
