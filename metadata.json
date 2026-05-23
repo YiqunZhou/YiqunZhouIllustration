@@ -1,0 +1,6 @@
+{
+  "name": "Yiqun Zhou Portfolio",
+  "description": "A minimalist portfolio for illustrator and comic artist Yiqun Zhou, featuring a fixed sidebar and a flexible grid gallery.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Caveat:wght@400..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-cursive: "Caveat", cursive;
+  --color-accent: #b0b07d;
+  --color-primary-bg: #48524a;
+}
+
+:root {
+  background-color: #48524a;
+  color: #b0b07d;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background-image: url("https://res.cloudinary.com/dufnjfidt/image/upload/v1779253452/mac_sync_folder/pattern1.png");
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-size: auto;
+  background-attachment: fixed;
+}
+
+/* Custom scrollbar for better aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
