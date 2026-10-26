@@ -41,7 +41,7 @@ export const IMAGES = {
   "sanlian1.jpg": "https://res.cloudinary.com/dufnjfidt/image/upload/v1779127743/mac_sync_folder/sanlian1.jpg",
   "sanlian2.jpg": "https://res.cloudinary.com/dufnjfidt/image/upload/v1779127766/mac_sync_folder/sanlian2.jpg",
   "sanlian3.jpg": "https://res.cloudinary.com/dufnjfidt/image/upload/v1779127765/mac_sync_folder/sanlian3.jpg",
-  "soccer.jpeg": "https://res.cloudinary.com/dufnjfidt/image/upload/v1779125905/mac_sync_folder/soccer.jpg",
+  "soccerfield.jpeg": "https://res.cloudinary.com/dufnjfidt/image/upload/v1793021976/mac_sync_folder/soccerfield.jpg",
   "soccer.png": "https://res.cloudinary.com/dufnjfidt/image/upload/v1785171270/mac_sync_folder/soccer.png",
   "super.jpg": "https://res.cloudinary.com/dufnjfidt/image/upload/v1779205158/mac_sync_folder/super.jpg",
   "tarot1.jpg": "https://res.cloudinary.com/dufnjfidt/image/upload/v1779123368/mac_sync_folder/tarot1.jpg",
@@ -84,7 +84,7 @@ export const IMAGE_DESCRIPTIONS: Record<string, string> = {
   "super.jpg": "super : Super Power Comedian Interview Another Super Power Comedian. Published by Birdcage Bottom Books. iJungle Illustration Award Merit Award in the Comics Category in 2020.",
   "16ways.jpg": "16 ways : Book illustration for Sixteen Ways to Defend a Walled City. August 2023.",
   "tour.jpeg": "tour : Web article illustration for a cultural tour in Shanghai. August 2022.",
-  "soccer.jpeg": "soccer : Web article illustration. April 2023.",
+  "soccerfield.jpeg": "soccerfield : Web article illustration. April 2023.",
   "print.jpg": "print : Print for poem I Will Only Go If You Throw Glass. November 2019.",
   "dvd1.jpg": "dvd1 : Illustration for RISD school magazine. May 2019.",
   "dvd2.jpg": "dvd2 : Illustration for RISD school magazine. May 2019."
@@ -133,7 +133,7 @@ export const SECTIONS: SectionConfig[] = [
     columns: 2,
     rows: [
       { images: ["16ways.jpg", "tour.jpeg"] },
-      { images: ["soccer.jpeg", "print.jpg"] },
+      { images: ["soccerfield.jpeg", "print.jpg"] },
       { images: ["dvd1.jpg", "dvd2.jpg"] },
     ]
   }
